@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path"
@@ -10,7 +10,7 @@ if [ ! -d "$dst" ]; then
   mkdir "$dst"
 fi
 
-cargo build --release && \
+cargo build --release
 cp -r "$src_release"/rshook.wasm "$dst"/index.wasm
 
 if [ ! -f ./scripts/hook-cleaner ]; then

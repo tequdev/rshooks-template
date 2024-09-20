@@ -2,7 +2,7 @@
 
 #![no_std]
 
-use xrpl_hooks::*;
+use rshooks_api::*;
 
 const GUARD_ID_1: u32 = line!();
 
