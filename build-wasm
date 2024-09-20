@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path"
+
+src_release=target/wasm32-unknown-unknown/release
+dst=build
+
+if [ ! -d "$dst" ]; then
+  mkdir "$dst"
+fi
+
+cargo build --release && \
+cp -r "$src_release"/rshook.wasm "$dst"/index.wasm
+
+if [ ! -f ./scripts/hook-cleaner ]; then
+  gcc -g ./scripts/cleaner.c -o ./scripts/hook-cleaner
+fi
+
+./scripts/hook-cleaner "$dst"/index.wasm

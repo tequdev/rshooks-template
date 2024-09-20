@@ -1,6 +1,8 @@
-# JSHooks Template
+# Rust Hooks Template
 
 ## Prerequisites
+
+- [rustup](https://rustup.rs/)
 
 - [pnpm](https://pnpm.io/installation)
 - [Docker](https://www.docker.com/get-started/)
@@ -9,6 +11,18 @@
   - `pip3 install xrpld-netgen`
 
 ## Usage
+
+### Add target
+
+```sh
+rustup target add wasm32-unknown-unknown
+```
+
+### Build
+
+```sh
+./build-wasm
+```
 
 ### Install dependencies
 
@@ -28,7 +42,7 @@ pnpm xrpld:start
 pnpm xrpld:stop
 ```
 
-### Build
+### Build (alias for `./build-wasm`)
 
 ```sh
 pnpm build

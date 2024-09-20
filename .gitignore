@@ -2,3 +2,7 @@ node_modules
 build
 xahau
 dist
+target
+scripts/*
+!scripts/cleaner.c
+Cargo.lock

@@ -25,12 +25,11 @@ describe('test', () => {
   beforeAll(async () => {
     testContext = await setupClient(serverUrl)
     const hook = createHookPayload({
-      version: 1,
+      version: 0,
       createFile: 'index',
       namespace: namespace,
       flags: SetHookFlags.hsfOverride,
       hookOnArray: ['Invoke'],
-      fee: '1000',
     })
     await setHooksV3({
       client: testContext.client,
