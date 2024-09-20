@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./build-wasm",
-    "test": "LOG_LEVEL=error VITE_CJS_TRACE=true vitest ./test/integration/*.test.ts",
-    "test:unit": "LOG_LEVEL=error VITE_CJS_TRACE=true vitest ./test/unit/**/*.test.ts",
-    "test:all": "LOG_LEVEL=error VITE_CJS_TRACE=true vitest",
+    "test": "LOG_LEVEL=error VITE_CJS_TRACE=true vitest",
     "format": "biome format . --write",
     "lint": "biome lint .",
     "check": "biome check --write .",
@@ -21,8 +19,7 @@
   "dependencies": {
     "@transia/xahau-models": "2.7.3-alpha.29",
     "@transia/xrpl": "2.7.3-alpha.28",
-    "dotenv": "^16.4.1",
-    "jshooks-api": "^1.0.5"
+    "dotenv": "^16.4.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.1",
@@ -30,7 +27,6 @@
     "@transia/ripple-binary-codec": "1.4.6-alpha.10",
     "@tsconfig/node18": "^18.2.2",
     "@types/node": "^20.14.5",
-    "js2wasm-cli": "^1.0.5",
     "lefthook": "^1.6.16",
     "typescript": "^5.3.3",
     "vite-tsconfig-paths": "^4.3.2",
