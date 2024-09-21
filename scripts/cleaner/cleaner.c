@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 #define VERSION "1.1"
-#define DEBUG 1
+#define DEBUG 0
 #define DEBUG_VERBOSE 0
 
 #define MAX_TYPES 256
@@ -67,7 +67,8 @@ void leb_out_pad(
     uint8_t** o,
     int padto)
 {
-    fprintf(stderr, "Leb_out_pad(i=%ld, pad=%d): [", i, padto);
+    if(DEBUG)
+        fprintf(stderr, "Leb_out_pad(i=%ld, pad=%d): [", i, padto);
     padto--;
     do
     {
@@ -78,12 +79,13 @@ void leb_out_pad(
 
         **o = b;
         (*o)++;
-        fprintf(stderr, " 0x%02X", b);
+        if(DEBUG)
+            fprintf(stderr, " 0x%02X", b);
         padto--;
     } while (i > 0 || padto >= 0);
 
-
-    fprintf(stderr, " ]\n");
+    if(DEBUG)
+        fprintf(stderr, " ]\n");
 }
 
 int cleaner (
@@ -290,7 +292,8 @@ int cleaner (
                     if (name_length == 2 && w[0] == '_' && w[1] == 'g')
                     {
                         guard_func_idx = func_upto;
-                        fprintf(stderr, "Guard function found at index: %d\n", guard_func_idx);
+                        if(DEBUG)
+                            fprintf(stderr, "Guard function found at index: %d\n", guard_func_idx);
                     }
                     ADVANCE(name_length);
 
@@ -448,8 +451,8 @@ int cleaner (
 
     if (hook_cbak_type == -1)
         return fprintf(stderr, "Hook/cbak has the wrong function signature. Must be int64_t (*) (uint32_t).\n");
-
-    fprintf(stderr, "hook idx: %d, cbak idx: %d\n", func_hook, func_cbak);
+    if(DEBUG)
+        fprintf(stderr, "hook idx: %d, cbak idx: %d\n", func_hook, func_cbak);
 
 
     if (guard_func_idx == -1)
@@ -855,7 +858,8 @@ int cleaner (
                         // parse locals
                         uint8_t* locals_start = w;
                         uint64_t locals_count = LEB();
-                        fprintf(stderr, "Locals count: %ld\n", locals_count);
+                        if(DEBUG)
+                            fprintf(stderr, "Locals count: %ld\n", locals_count);
                         for (int i = 0; i < locals_count; ++i)
                         {
                             LEB();      // inner len
@@ -869,7 +873,8 @@ int cleaner (
                         uint8_t* expr_start = w;
                         uint64_t expr_size = code_size - (w-locals_start);
 
-                        fprintf(stderr, "Expr start: %ld [0x%lx]\n", expr_size, expr_size);
+                        if(DEBUG)
+                            fprintf(stderr, "Expr start: %ld [0x%lx]\n", expr_size, expr_size);
 
                         // parse code
                         uint8_t* last_loop = 0;         // where the start of the last loop instruction is in the input
@@ -1282,8 +1287,9 @@ int cleaner (
                             uint8_t* code_size_ptr = o;
                         */
 
-                        fprintf(stderr, "Rewriting codesec from: %ld to %ld at %ld [0x%lx]\n",
-                                code_size,
+                        if(DEBUG)
+                            fprintf(stderr, "Rewriting codesec from: %ld to %ld at %ld [0x%lx]\n",
+                                    code_size,
                                 code_size + guard_rewrite_bytes,
                                 code_size,
                                 code_size);
@@ -1296,11 +1302,12 @@ int cleaner (
                 }
 
                 // rewrite the total size of the section
-                fprintf(stderr, "Rewriting codesec section from: %ld to %ld at %ld [0x%lx] \n",
-                        out_code_size + 1,
-                        out_code_size + 1 + total_guard_rewrite_bytes,
-                        out_code_size,
-                        out_code_size);
+                if(DEBUG)
+                  fprintf(stderr, "Rewriting codesec section from: %ld to %ld at %ld [0x%lx] \n",
+                          out_code_size + 1,
+                          out_code_size + 1 + total_guard_rewrite_bytes,
+                          out_code_size,
+                          out_code_size);
 
                 leb_out_pad(out_code_size + total_guard_rewrite_bytes + 1, /* 1 byte for vec len */
                         &codesec_out_size_ptr, 3);
@@ -1373,8 +1380,8 @@ int run(char* fnin, char* fnout)
             break;
         }
     }
-
-    fprintf(stderr, "Read source bytes: %ld out of %ld\n", upto, finlen);
+    if(DEBUG)
+        fprintf(stderr, "Read source bytes: %ld out of %ld\n", upto, finlen);
 
 
     uint8_t* out = (uint8_t*)malloc(finlen * 2);
