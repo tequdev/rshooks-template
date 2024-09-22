@@ -3,6 +3,8 @@ build
 xahau
 dist
 target
-scripts/*
-!scripts/cleaner.c
+scripts/*/*
+!scripts/**/*.c
+!scripts/**/*.cpp
+!scripts/**/*.h
 Cargo.lock
