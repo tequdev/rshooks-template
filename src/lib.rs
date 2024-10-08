@@ -21,7 +21,7 @@ pub extern "C" fn hook(_: i64) -> i64 {
     let mut account: AccountId = uninit_buf!();
     hook_account(&mut account);
 
-    let mut raddr: Buffer<40> = uninit_buf!();
+    let mut raddr: AccountId = uninit_buf!();
     util_raddr(&mut raddr, &account);
 
     // Tracing when compiling in debug mode
