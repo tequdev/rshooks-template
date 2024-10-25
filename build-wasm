@@ -13,12 +13,5 @@ fi
 cargo build --release
 cp -r "$src_release"/rshook.wasm "$dst"/index.wasm
 
-if [ ! -f ./scripts/cleaner/cleaner ]; then
-  gcc -g ./scripts/cleaner/cleaner.c -o ./scripts/cleaner/cleaner
-fi
-if [ ! -f ./scripts/guard-checker/guard-checker ]; then
-  g++ -g ./scripts/guard-checker/guard_checker.cpp -o ./scripts/guard-checker/guard-checker --std=c++17
-fi
-
-./scripts/cleaner/cleaner "$dst"/index.wasm
-./scripts/guard-checker/guard-checker "$dst"/index.wasm
+hook-cleaner "$dst"/index.wasm
+guard-checker "$dst"/index.wasm

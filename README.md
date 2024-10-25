@@ -12,6 +12,13 @@
 
 ## Usage
 
+### Install hook-cleaner, guard-checker
+
+```sh
+brew tap tequdev/tap
+brew install hook-cleaner guard-checker
+```
+
 ### Add target
 
 ```sh
